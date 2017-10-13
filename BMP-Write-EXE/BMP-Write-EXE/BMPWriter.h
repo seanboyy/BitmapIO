@@ -29,7 +29,7 @@ public:
 	//constructor for height, width, x and y resolutions, and pixel data
 	BitmapWriter(uint, uint, uint, uint, std::vector<Pixel>, std::string);
 	//constructor for height, width, x and y resolutions, and pixel data as char list
-	BitmapWriter(uint, uint, uint, uint, uchar*, std::string);
+	BitmapWriter(uint, uint, uint, uint, std::vector<uchar>, std::string);
 	//destructor
 	~BitmapWriter();
 	//fill whole image with specified pixel color
@@ -48,6 +48,8 @@ private:
 	ushort toLittleEndian(ushort);
 	//convert big endian int to little endian int
 	uint toLittleEndian(uint);
+	//flip image by row
+	void invertRows();
 	//length of bitmap file (whole thing)
 	uint fileLength;
 	//offset for start of pixel data
@@ -77,7 +79,7 @@ private:
 	//what colors to use for streamlining
 	uint colorTableValuesImportant;
 	//list of pixel data in LE format
-	uchar* pixelData;
+	std::vector<uchar> pixelData;
 	//vector of pixel structs
 	std::vector<Pixel> pixels;
 	//length of pixel data

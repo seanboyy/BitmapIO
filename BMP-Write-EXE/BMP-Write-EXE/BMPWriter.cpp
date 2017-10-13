@@ -62,7 +62,7 @@ BitmapWriter::BitmapWriter(uint height, uint width, uint xResolution, uint yReso
 	this->filename = filename;
 }
 
-BitmapWriter::BitmapWriter(uint height, uint width, uint xResolution, uint yResolution, uchar* pixelData, string filename) {
+BitmapWriter::BitmapWriter(uint height, uint width, uint xResolution, uint yResolution, vector<uchar> pixelData, string filename) {
 	imageHeight = height;
 	imageWidth = width;
 	compressionScheme = 0;
@@ -76,7 +76,7 @@ BitmapWriter::BitmapWriter(uint height, uint width, uint xResolution, uint yReso
 }
 
 BitmapWriter::~BitmapWriter() {
-	delete pixelData;
+	//delete pixelData;
 }
 
 BitmapWriter::Pixel::Pixel() {
@@ -156,7 +156,6 @@ void BitmapWriter::write() {
 	pixelDataOffset = imageInfoHeaderLength + headerLength;
 	//calculate length of file (should be 54 + pixelDataLength)
 	fileLength = headerLength + imageInfoHeaderLength + pixelDataLength;
-	//empty string of data to write
 	for (uint i = 0; i < sizeof(BITMAP_SIGNATURE); i++) {
 		fout << (uchar)((BITMAP_SIGNATURE << (8 * i)) >> ((sizeof(BITMAP_SIGNATURE) - 1) * 8));
 	}
@@ -217,30 +216,40 @@ void BitmapWriter::write() {
 	fout.close();
 }
 
-//TODO: MAKE IT WORK!!!!!
 void BitmapWriter::padRows() {
 	uint padAmount = (imageWidth * 3) % 4 == 0 ? 0 : 4 - ((imageWidth * 3) % 4);
 	uint rowCount = 0;
-	uchar* paddedPixelData = new uchar[imageHeight * ((imageWidth * 3) + padAmount)];
+	vector<uchar> paddedPixelData;
 	for (uint i = 0; i <= imageHeight * (imageWidth * 3); i++) {
 		if (i > 0 && i % (imageWidth * 3) == 0) {
-			for (uint j = 0; j < padAmount; ++j) {
-				paddedPixelData[i + j] = 0xFF;
+			for (uint j = 0; j < padAmount; j++) {
+				paddedPixelData.push_back(0x00);
 			}
 			rowCount++;
 		}
-		paddedPixelData[i + rowCount * padAmount] = pixelData[i];
+		if(i < imageHeight * (imageWidth * 3)) paddedPixelData.push_back(pixelData[i]);
 	}
 	pixelData = paddedPixelData;
 	pixelDataLength += padAmount * rowCount;
 }
 
 void BitmapWriter::fillPixelData() {
-	pixelData = new uchar[imageHeight * (imageWidth * 3)];
+	invertRows();
 	for (uint i = 0; i < pixels.size(); ++i) {
-		pixelData[i] = pixels[i].B;
-		pixelData[i + 1] = pixels[i].G;
-		pixelData[i + 2] = pixels[i].R;
+		pixelData.push_back(pixels[i].B);
+		pixelData.push_back(pixels[i].G);
+		pixelData.push_back(pixels[i].R);
 	}
 	pixelDataLength = imageHeight * (imageWidth * 3);
+}
+
+void BitmapWriter::invertRows() {
+	vector<BitmapWriter::Pixel> tempPixelVector;
+	//reverse iterate through list of pixel by rows
+	for (int i = ((imageHeight - 1)* imageWidth); i > -1; i -= imageWidth) {
+		for (uint j = 0; j < imageWidth; j++) {
+			 tempPixelVector.push_back(pixels[i + j]);
+		}
+	}
+	pixels = tempPixelVector;
 }

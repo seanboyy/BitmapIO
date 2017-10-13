@@ -22,6 +22,7 @@ image header chunk:
 	colors important: 0 (int)
 color table chunk:
 	//NULL
+//PIXEL DATA IS STORED IN REVERSED ROW ORDER
 pixel data chunk:
 	Red: 255 (char)
 	Green: 255 (char)

@@ -1,0 +1,47 @@
+42 4D 46 00 00 00 00 00 00 00 36 00 00 00 28 00
+00 00 02 00 00 00 02 00 00 00 01 00 18 00 00 00
+00 00 00 00 00 00 1E 0F 00 00 1E 0F 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 CD CD
+CD CD 00 00 CD CD 
+//BMP IS LITTLE ENDIAN
+file header chunk:
+	chunk prefix: BM (short) (bitmap file header)
+	size: 70 (int)
+	reserved bytes: 0 (int)
+	data offset: 54 (int)
+image header chunk:
+	size: 40 (int)
+	width: 2 (int)
+	height: 2 (int)
+	planes: 1 (short)
+	bit count: 24 (short)
+	compression type: 0 (int)
+	image size: 0 (int)
+	X res: 3870 (int)
+	Y res: 3870 (int)
+	colors used: 0 (int)
+	colors important: 0 (int)
+color table chunk:
+	//NULL
+//PIXEL DATA IS STORED IN REVERSED ROW ORDER
+pixel data chunk:
+	row: 
+		pixel:
+			RED: 205 (char)
+			GREEN: 205 (char)
+			BLUE: 205 (char)
+		pixel:
+			RED: 0 (char)
+			GREEN: 0 (char)
+			BLUE: 205 (char)
+		pad: 2 bytes
+	row:
+		pixel:
+			RED: 0 (char)
+			GREEN: 0 (char)
+			BLUE: 0 (char)
+		pixel:
+			RED: 0 (char)
+			GREEN: 0 (char)
+			BLUE: 0 (char)
+		pad: 2 bytes
