@@ -1,0 +1,30 @@
+//BMP IS LITTLE ENDIAN
+file header chunk:
+	chunk prefix: BM (short) (bitmap file header)
+	size: 1082 (int)
+	reserved bytes: 0 (int)
+	data offset: 1078 (int)
+image header chunk:
+	size: 40 (int)
+	width: 1 (int)
+	height: 1 (int)
+	planes: 1 (short)
+	bit count: 8 (short)
+	compression type: 0 (int)
+	image size: 0 (int)
+	X res: 3780 (int)
+	Y res: 3780 (int)
+	colors used: 256 (int)
+	colors important: 256 (int)
+color table chunk:
+	entry:
+		Red: 255 (char)
+		Green: 255 (char)
+		Blue: 255 (char)
+		PAD: 255 (char)
+	entry: (x241)
+		Red: 0 (char)
+		Green: 0 (char)
+		Blue: 0 (char)
+		PAD: 255 (char)
+pixel data chunk:
