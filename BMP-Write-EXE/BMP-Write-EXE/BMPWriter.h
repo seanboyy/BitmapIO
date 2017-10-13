@@ -1,12 +1,8 @@
 #pragma once
 
 #include <vector>
-//"BM" used for denoting binary file type
-#define BITMAP_SIGNATURE = (ushort)0x424D;
-//4 reserved bytes
-#define RESERVED_BYTES = (ushort)0x0000;
-//plane count bytes
-#define PLANE_COUNT = (ushort)0x0001
+#include <fstream>
+#include <string>
 
 typedef unsigned short ushort;
 typedef unsigned int uint;
@@ -24,15 +20,15 @@ public:
 	//empty constructor (probably won't be used...(making it anyway!!!!))
 	BitmapWriter();
 	//constructor for height and width, using standard resolution
-	BitmapWriter(uint, uint);
+	BitmapWriter(uint, uint, std::string);
 	//constructor for height, width, and x resolution, mirroring for y
-	BitmapWriter(uint, uint, uint);
+	BitmapWriter(uint, uint, uint, std::string);
 	//constructor for height, width, and x and y resolutions
-	BitmapWriter(uint, uint, uint, uint);
+	BitmapWriter(uint, uint, uint, uint, std::string);
 	//constructor for height, width, x and y resolutions, and pixel data
-	BitmapWriter(uint, uint, uint, uint, std::vector<Pixel>);
+	BitmapWriter(uint, uint, uint, uint, std::vector<Pixel>, std::string);
 	//constructor for height, width, x and y resolutions, and pixel data as char list
-	BitmapWriter(uint, uint, uint, uint, uchar*);
+	BitmapWriter(uint, uint, uint, uint, uchar*, std::string);
 	//destructor
 	~BitmapWriter();
 	//fill whole image with specified pixel color
@@ -54,17 +50,13 @@ private:
 	//length of bitmap file (whole thing)
 	uint fileLength;
 	//offset for start of pixel data
-	uint pixelOffset;
+	uint pixelDataOffset;
 	//size of second header
-	uint imageInfoHeaderSize;
+	uint imageInfoHeaderLength;
 	//width of image
 	uint imageWidth;
 	//height of image
 	uint imageHeight;
-	//plane depth
-	ushort planeCount;
-	//color complexity
-	ushort colorDepth;
 	//compression scheme if applicable
 	//0 for uncompressed
 	//1 for RLE-8 (8-bit)
@@ -87,4 +79,18 @@ private:
 	uchar* pixelData;
 	//vector of pixel structs
 	std::vector<Pixel> pixels;
+	//length of pixel data
+	uint pixelDataLength;
+	//length of file header
+	uint headerLength;
+	//name of image file
+	std::string filename;
+	//"BM" used for denoting binary file type
+	const ushort BITMAP_SIGNATURE = (ushort)0x424D;
+	//4 reserved bytes
+	const uint RESERVED_BYTES = (uint)0x00000000;
+	//plane count bytes
+	const ushort PLANE_COUNT = (ushort)0x0001;
+	//color complexity
+	const ushort COLOR_DEPTH = (ushort)0x0018;
 };
