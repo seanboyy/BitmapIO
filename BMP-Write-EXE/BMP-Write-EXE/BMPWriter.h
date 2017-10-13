@@ -29,6 +29,12 @@ public:
 	BitmapWriter(uint, uint, uint);
 	//constructor for height, width, and x and y resolutions
 	BitmapWriter(uint, uint, uint, uint);
+	//constructor for height, width, x and y resolutions, and pixel data
+	BitmapWriter(uint, uint, uint, uint, std::vector<Pixel>);
+	//constructor for height, width, x and y resolutions, and pixel data as char list
+	BitmapWriter(uint, uint, uint, uint, uchar*);
+	//destructor
+	~BitmapWriter();
 	//convert big endian short to little endian short
 	ushort toLittleEndian(ushort);
 	//convert big endian int to little endian int
@@ -37,12 +43,14 @@ public:
 	std::vector<Pixel> fillOneColor(Pixel);
 	//fill whole image with specified RGB channel values
 	std::vector<Pixel> fillOneColor(uchar, uchar, uchar);
+	//create a bitmap file
+	void write();
 private:
 	//add extra bytes to the end of a row
 	//for padding out to 4 divisible row length
-	uchar* padRow(uint);
+	void padRow(uint);
 	//convert the pixel vector into a char list
-	uchar* fillPixelData();
+	void fillPixelData();
 	//length of bitmap file (whole thing)
 	uint fileLength;
 	//offset for start of pixel data
