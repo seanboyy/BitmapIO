@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <iostream>
 
 typedef unsigned short ushort;
 typedef unsigned int uint;
