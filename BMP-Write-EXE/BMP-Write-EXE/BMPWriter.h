@@ -21,7 +21,7 @@ public:
 		uchar G;
 		uchar B;
 	};
-	//empty constructor (probably won't be used...)
+	//empty constructor (probably won't be used...(making it anyway!!!!))
 	BitmapWriter();
 	//constructor for height and width, using standard resolution
 	BitmapWriter(uint, uint);
@@ -35,22 +35,22 @@ public:
 	BitmapWriter(uint, uint, uint, uint, uchar*);
 	//destructor
 	~BitmapWriter();
-	//convert big endian short to little endian short
-	ushort toLittleEndian(ushort);
-	//convert big endian int to little endian int
-	uint toLittleEndian(uint);
 	//fill whole image with specified pixel color
-	std::vector<Pixel> fillOneColor(Pixel);
+	void fillOneColor(Pixel);
 	//fill whole image with specified RGB channel values
-	std::vector<Pixel> fillOneColor(uchar, uchar, uchar);
+	void fillOneColor(uchar, uchar, uchar);
 	//create a bitmap file
 	void write();
 private:
 	//add extra bytes to the end of a row
 	//for padding out to 4 divisible row length
-	void padRow(uint);
+	void padRows();
 	//convert the pixel vector into a char list
 	void fillPixelData();
+	//convert big endian short to little endian short
+	ushort toLittleEndian(ushort);
+	//convert big endian int to little endian int
+	uint toLittleEndian(uint);
 	//length of bitmap file (whole thing)
 	uint fileLength;
 	//offset for start of pixel data
@@ -83,8 +83,8 @@ private:
 	uint colorTableValuesUsed;
 	//what colors to use for streamlining
 	uint colorTableValuesImportant;
-	//maybe i'll use it.....maybe i won't.....
+	//list of pixel data in LE format
 	uchar* pixelData;
-	//or maybe i'll use this one........
+	//vector of pixel structs
 	std::vector<Pixel> pixels;
 };
