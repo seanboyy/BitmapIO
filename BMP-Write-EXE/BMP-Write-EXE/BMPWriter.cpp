@@ -222,7 +222,7 @@ void BitmapWriter::padRows() {
 	uint padAmount = (imageWidth * 3) % 4 == 0 ? 0 : 4 - ((imageWidth * 3) % 4);
 	uint rowCount = 0;
 	uchar* paddedPixelData = new uchar[imageHeight * ((imageWidth * 3) + padAmount)];
-	for (uint i = 0; i < imageHeight * (imageWidth * 3); i++) {
+	for (uint i = 0; i <= imageHeight * (imageWidth * 3); i++) {
 		if (i > 0 && i % (imageWidth * 3) == 0) {
 			for (uint j = 0; j < padAmount; ++j) {
 				paddedPixelData[i + j] = 0xFF;
