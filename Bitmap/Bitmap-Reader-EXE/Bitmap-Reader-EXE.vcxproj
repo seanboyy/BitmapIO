@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{96579362-DC01-4D03-A282-644BB6AE0E01}</ProjectGuid>
+    <ProjectGuid>{EAD9E9CA-4F0B-4586-BC05-68E174EB005B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>BMPWriteEXE</RootNamespace>
+    <RootNamespace>BitmapReaderEXE</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -89,6 +89,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\Sean\Documents\BMP\Bitmap\Bitmap;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,11 +147,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BMPWriter.h" />
+    <ClCompile Include="BitmapReader.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BMPWriter.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClInclude Include="BitmapReader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bitmap\Bitmap.vcxproj">
+      <Project>{adc34334-d0db-436f-b44e-64f9e31f363a}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
