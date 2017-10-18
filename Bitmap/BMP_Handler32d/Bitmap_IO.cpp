@@ -28,7 +28,6 @@ Bitmap::Bitmap(const char* filename, uint width, uint height, uint xRes, uint yR
 }
 
 char* Bitmap::toString(Bitmap& bitmap) {
-	bitmap.fillPixelData();
 	bitmap.padRows();
 	bitmap.imageInfoHeaderLength = sizeof(imageInfoHeaderLength) + sizeof(imageWidth) + sizeof(imageHeight) + sizeof(PLANE_COUNT) + sizeof(COLOR_DEPTH) + sizeof(compressionScheme) + sizeof(imageSizeDelta) + sizeof(xResolution) + sizeof(yResolution) + sizeof(colorTableValuesUsed) + sizeof(colorTableValuesImportant);
 	bitmap.headerLength = sizeof(BITMAP_SIGNATURE) + sizeof(fileLength) + sizeof(RESERVED_BYTES) + sizeof(pixelDataOffset);
@@ -213,14 +212,13 @@ void Bitmap::fillPixel() {
 void Bitmap::padRows() {
 	if (flagPadded) return;
 	uint padAmount = (imageWidth * 3) % 4 == 0 ? 0 : 4 - ((imageWidth * 3) % 4);
-	uint rowCount = 0;
+	if (pixelData.size() == 0) fillPixelData();
 	vector<uchar> paddedPixelData;
 	for (uint i = 0; i <= imageHeight * (imageWidth * 3); i++) {
 		if (i > 0 && i % (imageWidth * 3) == 0) {
 			for (uint j = 0; j < padAmount; j++) {
 				paddedPixelData.push_back(0x00);
 			}
-			rowCount++;
 		}
 		if (i < imageHeight * (imageWidth * 3)) paddedPixelData.push_back(pixelData[i]);
 	}
@@ -347,6 +345,14 @@ void Bitmap::setFilename(Bitmap& bitmap, const char* name) {
 
 uint Bitmap::getFileSize(Bitmap& bitmap) {
 	return bitmap.fileLength;
+}
+
+uint Bitmap::getWidth(Bitmap& bitmap) {
+	return bitmap.imageWidth;
+}
+
+uint Bitmap::getHeight(Bitmap& bitmap) {
+	return bitmap.imageHeight;
 }
 
 void Bitmap::fillColor(Bitmap& bitmap, Bitmap::Pixel pixel) {

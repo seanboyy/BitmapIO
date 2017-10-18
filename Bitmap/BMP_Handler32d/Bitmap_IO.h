@@ -44,31 +44,35 @@ public:
 	//equals operator for deep equality
 	 void operator= (const Bitmap&);
 	//outputs bitmap data as a properly formatted bitmap string
-	static  char* toString(Bitmap&);
+	static char* toString(Bitmap&);
 	//creates a bitmap object from a properly formatted bitmap string
-	static  void fromString(Bitmap&, char*);
+	static void fromString(Bitmap&, char*);
 	//gets filename
-	static  std::string getFilename(Bitmap&);
+	static std::string getFilename(Bitmap&);
 	//sets filename
-	static  void setFilename(Bitmap&, const char*);
+	static void setFilename(Bitmap&, const char*);
 	//gets filesize
-	static  uint getFileSize(Bitmap&);
+	static uint getFileSize(Bitmap&);
+	//gets height
+	static uint getHeight(Bitmap&);
+	//gets width
+	static uint getWidth(Bitmap&);
 	//fills image with specified pixel
-	static  void fillColor(Bitmap&, Pixel);
+	static void fillColor(Bitmap&, Pixel);
 	//fills image with specified colors
-	static  void fillColor(Bitmap&, uchar, uchar, uchar);
+	static void fillColor(Bitmap&, uchar, uchar, uchar);
 	//gets the list of pixel objects
-	static  std::vector<Pixel> getPixels(Bitmap&);
+	static std::vector<Pixel> getPixels(Bitmap&);
 	//sets the list of pixel objects
-	static  void setPixels(Bitmap&, std::vector<Pixel>);
+	static void setPixels(Bitmap&, std::vector<Pixel>);
 	//sets pixel data list
-	static  void setPixelData(Bitmap&, std::vector<uchar>);
+	static void setPixelData(Bitmap&, std::vector<uchar>);
 	//graps the padded flag
-	static  bool getFlagPadded(Bitmap&);
+	static bool getFlagPadded(Bitmap&);
 	//grabs the pixel data as a padded list
-	static  std::vector<uchar> getPaddedPixelData(Bitmap&);
+	static std::vector<uchar> getPaddedPixelData(Bitmap&);
 	//grabs the pixel data as an unpadded list
-	static  std::vector<uchar> getUnpaddedPixelData(Bitmap&);
+	static std::vector<uchar> getUnpaddedPixelData(Bitmap&);
 private:
 	//remove the padding from the end of each row
 	void unpadRows();
@@ -149,9 +153,9 @@ private:
 class BitmapWriter {
 public:
 	//write specified bitmap to file
-	static  void write(Bitmap&);
+	static void write(Bitmap&);
 	//fill bitmap with spcified pixel
-	static  void fill(Bitmap&, Bitmap::Pixel);
+	static void fill(Bitmap&, Bitmap::Pixel);
 	//fill bitmap with specified color
 	static void fill(Bitmap&, uchar, uchar, uchar);
 };
@@ -159,5 +163,5 @@ public:
 class BitmapReader {
 public:
 	//read bitmap from specified file
-	static  Bitmap read(Bitmap&);
+	static Bitmap read(Bitmap&);
 };

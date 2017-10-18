@@ -4,6 +4,8 @@
 unsigned char* BMP_Handler::loadBMP(const char* filename, int& width, int& height) {
 	Bitmap bitmap = Bitmap(filename, width, height);
 	BitmapReader::read(bitmap);
+	width = Bitmap::getWidth(bitmap);
+	height = Bitmap::getHeight(bitmap);
 	std::vector<unsigned char> pixelData = Bitmap::Bitmap::getUnpaddedPixelData(bitmap);
 	unsigned char* pixelDataSimple = new unsigned char[pixelData.size()];
 	for (unsigned int i = 0; i < pixelData.size(); ++i) {
