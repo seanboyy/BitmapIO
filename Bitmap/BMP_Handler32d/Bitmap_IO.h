@@ -75,7 +75,7 @@ namespace bmp {
 		//grabs the pixel data as an unpadded list
 		static std::vector<uchar> getUnpaddedPixelData(Bitmap&);
 	private:
-		//remove the padding from the end of each row
+		//remove padding from the end of each row
 		void unpadRows();
 		//add padding to the end of each row
 		void padRows();

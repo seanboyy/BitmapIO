@@ -68,7 +68,7 @@ namespace bmp {
 		//i = 3:
 		//AABBCCDD -> DD000000 -> 000000DD
 		//dataToWrite[cursor + 3] = DD
-		//above example is for INT. SHORT uses 4 bytes as opposed to 8
+		//above example is for INT. SHORT uses 2 bytes as opposed to 4
 
 		//write 'B' and 'M' to string (bitmap signature), and advance the cursor
 		for (uint i = 0; i < sizeof(bitmap.BITMAP_SIGNATURE); i++) {
