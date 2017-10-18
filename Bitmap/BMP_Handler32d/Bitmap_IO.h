@@ -87,14 +87,10 @@ namespace bmp {
 		void fillPixelData();
 		//populate the pixel list
 		void fillPixel();
-		//convert a short to little endian
-		ushort toLittleEndian(ushort);
-		//convert a short to big endian
-		ushort toBigEndian(ushort);
-		//convert an int to little endian
-		uint toLittleEndian(uint);
-		//convert an int to big endian
-		uint toBigEndian(uint);
+		//flip flop endianness (ushort)
+		ushort changeEndianness(ushort);
+		//flip flop endianness (uint)
+		uint changeEndianness(uint);
 		//grab a short from a byte array
 		ushort getShortFromStream(uint, char*);
 		//grab an int from a byte array
