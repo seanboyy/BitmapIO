@@ -123,13 +123,15 @@ namespace bmp {
 			cursor++;
 		}
 		//write compression scheme to string and advance cursor
+		uint compressionSchemeLE = bitmap.changeEndianness(bitmap.compressionScheme);
 		for (uint i = 0; i < sizeof(bitmap.compressionScheme); i++) {
-			dataToWrite[cursor] = (bitmap.compressionScheme << (8 * i)) >> ((sizeof(bitmap.compressionScheme) - 1) * 8);
+			dataToWrite[cursor] = (compressionSchemeLE << (8 * i)) >> ((sizeof(compressionSchemeLE) - 1) * 8);
 			cursor++;
 		}
 		//write image size delta to string and advance cursor
+		uint imageSizeDeltaLE = bitmap.changeEndianness(bitmap.imageSizeDelta);
 		for (uint i = 0; i < sizeof(bitmap.imageSizeDelta); i++) {
-			dataToWrite[cursor] = (bitmap.imageSizeDelta << (8 * i)) >> ((sizeof(bitmap.imageSizeDelta) - 1) * 8);
+			dataToWrite[cursor] = (imageSizeDeltaLE << (8 * i)) >> ((sizeof(imageSizeDeltaLE) - 1) * 8);
 			cursor++;
 		}
 		//convert x resolution to little endian (was big endian), write to string, and advance cursor
@@ -145,13 +147,15 @@ namespace bmp {
 			cursor++;
 		}
 		//write the number of color table values used to string and advance cursor
+		uint colorTableValuesUsedLE = bitmap.changeEndianness(bitmap.colorTableValuesUsed);
 		for (uint i = 0; i < sizeof(bitmap.colorTableValuesUsed); i++) {
-			dataToWrite[cursor] = (bitmap.colorTableValuesUsed << (8 * i)) >> ((sizeof(bitmap.colorTableValuesUsed) - 1) * 8);
+			dataToWrite[cursor] = (colorTableValuesUsedLE << (8 * i)) >> ((sizeof(colorTableValuesUsedLE) - 1) * 8);
 			cursor++;
 		}
 		//write the number of color table values important to string and advance cursor
+		uint colorTableValuesImportantLE = bitmap.changeEndianness(bitmap.colorTableValuesImportant);
 		for (uint i = 0; i < sizeof(bitmap.colorTableValuesImportant); i++) {
-			dataToWrite[cursor] = (bitmap.colorTableValuesImportant << (8 * i)) >> ((sizeof(bitmap.colorTableValuesImportant) - 1) * 8);
+			dataToWrite[cursor] = (colorTableValuesImportantLE << (8 * i)) >> ((sizeof(colorTableValuesImportantLE) - 1) * 8);
 			cursor++;
 		}
 		//write all data in pixel data array to string (pixels and padding)
@@ -393,6 +397,8 @@ namespace bmp {
 			//((((3 * 3) + 3) * 2) - 3) = (((9 + 3) * 2) - 3) = 24 - 3 = 21. if i == 21, we're in a pad
 			//third (and last) time: row count = 3
 			//((((3 * 3) + 3) * 3) - 3) = (((9 + 3) * 3) - 3) = 36 - 3 = 33. if i = 33, we're in a pad
+			//row count = 4
+			//((((3 * 3) + 3) * 4) - 3) = (((9 + 3) * 4) - 3) = 48 - 3 = 45. 45 is out of bounds
 			if (padAmount > 0 && i > 0 && i % ((((imageWidth * 3) + padAmount) * rowCount) - padAmount) == 0) {
 				//skip over pad
 				i += padAmount;

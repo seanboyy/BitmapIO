@@ -42,7 +42,7 @@ namespace bmp {
 			std::vector<uchar> pixelData = std::vector<uchar>(0), bool flagInverted = false,
 			bool flagPadded = false, bool flagPixelsInverted = false, uint compressionScheme = 0,
 			uint imageSizeDelta = 0, uint colorTableValuesUsed = 0, uint colorTableValuesImportant = 0);
-		//equals operator for deep equality
+		//equals operator for deep assignment
 		void operator= (const Bitmap&);
 		//outputs bitmap data as a properly formatted bitmap string
 		static char* toString(Bitmap&);
