@@ -185,8 +185,6 @@ namespace bmp {
 		cursor += sizeof(bitmap.fileLength);
 		//grab next four bytes (reserved bytes)
 		uint reserve = bitmap.getIntFromStream(cursor, bitmapData);
-		//make sure they are correct
-		assert(reserve == bitmap.RESERVED_BYTES);
 		//advance cursor
 		cursor += sizeof(reserve);
 		//grab next four bytes (pixel data offset) and convert to big endian (was little endian)

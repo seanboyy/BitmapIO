@@ -2,12 +2,10 @@
 #include "BMP_Handler.h"
 
 using namespace std;
+using namespace bmp;
 
 int main(int argc, char** argv) {
 	system("pause");
-	int width = 200, height = 200;
-	uchar* bitmapData = BMP_Handler::loadBMP("PaintTest.bmp", width, height);
-	BMP_Handler::saveBMP("PaintResult.bmp", bitmapData, width, height);
 	system("pause");
 	return 0;
 }
