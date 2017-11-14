@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>593</width>
-    <height>531</height>
+    <width>633</width>
+    <height>588</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>571</width>
-      <height>321</height>
+      <width>611</width>
+      <height>371</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -36,7 +36,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>593</width>
+     <width>633</width>
      <height>21</height>
     </rect>
    </property>
@@ -107,8 +107,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>BMPOtherEndClass</sender>
+   <signal>sendPixmap(QPixmap)</signal>
+   <receiver>pictureLabel</receiver>
+   <slot>setPixmap(QPixmap)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>219</x>
+     <y>451</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>218</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
+  <signal>sendPixmap(QPixmap)</signal>
   <slot>loadFile()</slot>
  </slots>
 </ui>

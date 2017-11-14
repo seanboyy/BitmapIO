@@ -9,5 +9,7 @@ BMPOtherEnd::BMPOtherEnd(QWidget *parent)
 }
 
 void BMPOtherEnd::loadFile() {
+	QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), QString(), tr("Images (*.bmp)"));
 
+	emit sendPixmap(QPixmap(filename));
 }

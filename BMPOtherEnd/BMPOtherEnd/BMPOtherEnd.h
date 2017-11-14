@@ -11,6 +11,8 @@ public:
 	BMPOtherEnd(QWidget *parent = Q_NULLPTR);
 public slots:
 	void loadFile(void);
+signals:
+	void sendPixmap(QPixmap);
 private:
 	Ui::BMPOtherEndClass ui;
 };

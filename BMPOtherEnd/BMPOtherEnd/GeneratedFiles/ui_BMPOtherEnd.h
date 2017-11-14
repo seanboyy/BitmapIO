@@ -40,7 +40,7 @@ public:
     {
         if (BMPOtherEndClass->objectName().isEmpty())
             BMPOtherEndClass->setObjectName(QStringLiteral("BMPOtherEndClass"));
-        BMPOtherEndClass->resize(593, 531);
+        BMPOtherEndClass->resize(633, 588);
         actionOpen = new QAction(BMPOtherEndClass);
         actionOpen->setObjectName(QStringLiteral("actionOpen"));
         actionExit = new QAction(BMPOtherEndClass);
@@ -49,12 +49,12 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         pictureLabel = new QLabel(centralWidget);
         pictureLabel->setObjectName(QStringLiteral("pictureLabel"));
-        pictureLabel->setGeometry(QRect(10, 10, 571, 321));
+        pictureLabel->setGeometry(QRect(10, 10, 611, 371));
         pictureLabel->setFrameShape(QFrame::WinPanel);
         BMPOtherEndClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(BMPOtherEndClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 593, 21));
+        menuBar->setGeometry(QRect(0, 0, 633, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         BMPOtherEndClass->setMenuBar(menuBar);
@@ -73,6 +73,7 @@ public:
         retranslateUi(BMPOtherEndClass);
         QObject::connect(actionExit, SIGNAL(triggered()), BMPOtherEndClass, SLOT(close()));
         QObject::connect(actionOpen, SIGNAL(triggered()), BMPOtherEndClass, SLOT(loadFile()));
+        QObject::connect(BMPOtherEndClass, SIGNAL(sendPixmap(QPixmap)), pictureLabel, SLOT(setPixmap(QPixmap)));
 
         QMetaObject::connectSlotsByName(BMPOtherEndClass);
     } // setupUi
