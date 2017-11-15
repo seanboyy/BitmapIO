@@ -1,3 +1,10 @@
+/*
+Sean Bamford
+COMP 322: OBJ Oriented / Advanced Programming
+Project 3 : BITMAP
+Implements the things set in the header file
+*/
+
 #include "Bitmap_IO.h"
 
 using namespace std;
@@ -760,4 +767,6 @@ namespace bmp {
 	void BitmapWriter::fill(Bitmap& bitmap, uchar R, uchar G, uchar B) {
 		Bitmap::fillColor(bitmap, R, G, B);
 	}
+
+	//--------------------END OF BITMAPWRITER CLASS--------------------//
 }

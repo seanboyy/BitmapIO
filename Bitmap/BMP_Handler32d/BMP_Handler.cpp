@@ -1,3 +1,11 @@
+/*
+Sean Bamford
+COMP 322: OBJ Oriented / Advanced Programming
+Project 3 : BITMAP
+Implements the things set in the header file
+*/
+
+
 #include "BMP_Handler.h"
 #include "Bitmap_IO.h"
 

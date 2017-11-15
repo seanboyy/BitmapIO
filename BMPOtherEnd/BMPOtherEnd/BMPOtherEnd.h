@@ -11,6 +11,7 @@ public:
 	BMPOtherEnd(QWidget *parent = Q_NULLPTR);
 public slots:
 	void loadFile(void);
+	void saveFile(void);
 signals:
 	void sendPixmap(QPixmap);
 private:

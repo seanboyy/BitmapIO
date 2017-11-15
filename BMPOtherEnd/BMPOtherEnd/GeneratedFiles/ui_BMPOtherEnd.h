@@ -29,6 +29,7 @@ class Ui_BMPOtherEndClass
 public:
     QAction *actionOpen;
     QAction *actionExit;
+    QAction *actionSave;
     QWidget *centralWidget;
     QLabel *pictureLabel;
     QMenuBar *menuBar;
@@ -45,12 +46,15 @@ public:
         actionOpen->setObjectName(QStringLiteral("actionOpen"));
         actionExit = new QAction(BMPOtherEndClass);
         actionExit->setObjectName(QStringLiteral("actionExit"));
+        actionSave = new QAction(BMPOtherEndClass);
+        actionSave->setObjectName(QStringLiteral("actionSave"));
         centralWidget = new QWidget(BMPOtherEndClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         pictureLabel = new QLabel(centralWidget);
         pictureLabel->setObjectName(QStringLiteral("pictureLabel"));
         pictureLabel->setGeometry(QRect(10, 10, 611, 371));
         pictureLabel->setFrameShape(QFrame::WinPanel);
+        pictureLabel->setScaledContents(true);
         BMPOtherEndClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(BMPOtherEndClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -67,6 +71,7 @@ public:
 
         menuBar->addAction(menuFile->menuAction());
         menuFile->addAction(actionOpen);
+        menuFile->addAction(actionSave);
         menuFile->addSeparator();
         menuFile->addAction(actionExit);
 
@@ -74,6 +79,7 @@ public:
         QObject::connect(actionExit, SIGNAL(triggered()), BMPOtherEndClass, SLOT(close()));
         QObject::connect(actionOpen, SIGNAL(triggered()), BMPOtherEndClass, SLOT(loadFile()));
         QObject::connect(BMPOtherEndClass, SIGNAL(sendPixmap(QPixmap)), pictureLabel, SLOT(setPixmap(QPixmap)));
+        QObject::connect(actionSave, SIGNAL(triggered()), BMPOtherEndClass, SLOT(saveFile()));
 
         QMetaObject::connectSlotsByName(BMPOtherEndClass);
     } // setupUi
@@ -83,6 +89,7 @@ public:
         BMPOtherEndClass->setWindowTitle(QApplication::translate("BMPOtherEndClass", "BMPOtherEnd", Q_NULLPTR));
         actionOpen->setText(QApplication::translate("BMPOtherEndClass", "Open...", Q_NULLPTR));
         actionExit->setText(QApplication::translate("BMPOtherEndClass", "Exit", Q_NULLPTR));
+        actionSave->setText(QApplication::translate("BMPOtherEndClass", "Save...", Q_NULLPTR));
         pictureLabel->setText(QString());
         menuFile->setTitle(QApplication::translate("BMPOtherEndClass", "File", Q_NULLPTR));
     } // retranslateUi

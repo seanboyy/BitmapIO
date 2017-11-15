@@ -13,3 +13,7 @@ void BMPOtherEnd::loadFile() {
 
 	emit sendPixmap(QPixmap(filename));
 }
+
+void BMPOtherEnd::saveFile() {
+	QString filename = QFileDialog::getSaveFileName(this, tr("Save File"), QString(), tr("Images (*.bmp)"));
+}
