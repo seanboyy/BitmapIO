@@ -3,10 +3,12 @@
 #include <QString>
 #include <QMessageBox>
 
-BMPOtherEnd::BMPOtherEnd(QWidget *parent)
-	: QMainWindow(parent)
-{
+BMPOtherEnd::BMPOtherEnd(QWidget *parent) : QMainWindow(parent) {
 	ui.setupUi(this);
+}
+
+BMPOtherEnd::~BMPOtherEnd() {
+	delete[] pixels;
 }
 
 void BMPOtherEnd::loadFile() {
@@ -20,4 +22,17 @@ void BMPOtherEnd::saveFile() {
 	QString filename = QFileDialog::getSaveFileName(this, tr("Save File"), QString(), tr("Images (*.bmp)"));
 	if (filename.isEmpty()) return;
 	BMP_Handler::saveBMP(filename.toStdString().c_str(), pixels, width, height);
+}
+
+void BMPOtherEnd::read() {
+	emit sendImageData(pixels, &width, &height);
+}
+
+void BMPOtherEnd::write(char* text) {
+	size_t arrSize = (height * (width * 3)) / 8;
+	for (size_t i = 0; i < arrSize; ++i) {
+		for (int j = 0; j < 8; ++j) {
+			pixels[i + j] &= ((text[i] & (0x80 >> j)) >> (7 - j));
+		}
+	}
 }

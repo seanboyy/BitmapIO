@@ -55,6 +55,15 @@
     <ClCompile Include="GeneratedFiles\qrc_BMPOtherEnd.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="SteganoTextEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_SteganoTextEdit.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_SteganoTextEdit.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="BMPOtherEnd.h">
@@ -65,6 +74,9 @@
     </CustomBuild>
     <CustomBuild Include="BMPOtherEnd.qrc">
       <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="SteganoTextEdit.hpp">
+      <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

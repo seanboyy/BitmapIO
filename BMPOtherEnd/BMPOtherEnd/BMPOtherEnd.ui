@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>633</width>
-    <height>588</height>
+    <width>631</width>
+    <height>586</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,13 +33,52 @@
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>400</y>
+      <width>111</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Encode</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>490</y>
+      <width>111</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Decode</string>
+    </property>
+   </widget>
+   <widget class="SteganoTextEdit" name="plainTextEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>390</y>
+      <width>491</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="cursor" stdset="0">
+     <cursorShape>IBeamCursor</cursorShape>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>633</width>
+     <width>631</width>
      <height>21</height>
     </rect>
    </property>
@@ -80,6 +119,18 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>SteganoTextEdit</class>
+   <extends>QPlainTextEdit</extends>
+   <header>SteganoTextEdit.hpp</header>
+   <slots>
+    <signal>sendText(char*)</signal>
+    <slot>read(uchar*,int,int)</slot>
+    <slot>write()</slot>
+   </slots>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="BMPOtherEnd.qrc"/>
  </resources>
@@ -148,10 +199,77 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>plainTextEdit</receiver>
+   <slot>write()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>555</x>
+     <y>452</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>478</x>
+     <y>494</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BMPOtherEndClass</sender>
+   <signal>sendImageData(uchar*,int,int)</signal>
+   <receiver>plainTextEdit</receiver>
+   <slot>read(uchar*,int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>565</x>
+     <y>491</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>472</x>
+     <y>511</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>BMPOtherEndClass</receiver>
+   <slot>read()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>566</x>
+     <y>545</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>596</x>
+     <y>475</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plainTextEdit</sender>
+   <signal>sendText(char*)</signal>
+   <receiver>BMPOtherEndClass</receiver>
+   <slot>write(char*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>477</x>
+     <y>456</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>559</x>
+     <y>477</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>sendPixmap(QPixmap)</signal>
+  <signal>sendImageData(uchar*,int*,int*)</signal>
   <slot>loadFile()</slot>
   <slot>saveFile()</slot>
+  <slot>read()</slot>
+  <slot>write(char*)</slot>
  </slots>
 </ui>
