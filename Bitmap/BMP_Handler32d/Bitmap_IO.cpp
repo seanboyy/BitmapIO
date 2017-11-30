@@ -9,11 +9,6 @@ Implements the things set in the header file
 
 using namespace std;
 namespace bmp {
-	//copy constructor
-	Bitmap::Bitmap(const Bitmap& other) {
-		*this = other;
-	}
-
 	//default constructor
 	Bitmap::Bitmap(const char* filename, uint width, uint height, uint xRes, uint yRes, vector<Pixel> pixels, vector<uchar> pixelData, bool flagInverted, bool flagPadded, bool flagPixelsInverted, uint compressionScheme, uint imageSizeDelta, uint colorTableValuesUsed, uint colorTableValuesImportant) {
 		//make sure that the bitmap's size is greater than 0 on both axes
@@ -474,7 +469,7 @@ namespace bmp {
 		out |= b1;
 		//move up (0022 -> 2200)
 		out <<= 8;
-		//put MSP in out (2200 -> 2211) [yay]
+		//put MSB in out (2200 -> 2211) [yay]
 		out |= b2;
 		//return result
 		return out;

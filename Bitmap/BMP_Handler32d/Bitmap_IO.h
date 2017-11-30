@@ -20,8 +20,6 @@ namespace bmp {
 			uchar G;
 			uchar B;
 		};
-		//copy constructor
-		Bitmap(const Bitmap&);
 		//constructor with defaults used for all except width and height, which must be specified
 		//default filename = temp.bmp
 		//default width = 1

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>631</width>
-    <height>586</height>
+    <width>632</width>
+    <height>587</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,7 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="encode">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -46,7 +46,7 @@
      <string>Encode</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="decode">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -78,7 +78,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>631</width>
+     <width>632</width>
      <height>21</height>
     </rect>
    </property>
@@ -126,7 +126,7 @@
    <header>SteganoTextEdit.hpp</header>
    <slots>
     <signal>sendText(char*)</signal>
-    <slot>read(uchar*,int,int)</slot>
+    <slot>read(uchar*,int*,int*)</slot>
     <slot>write()</slot>
    </slots>
   </customwidget>
@@ -135,22 +135,6 @@
   <include location="BMPOtherEnd.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>actionExit</sender>
-   <signal>triggered()</signal>
-   <receiver>BMPOtherEndClass</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>296</x>
-     <y>265</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>actionOpen</sender>
    <signal>triggered()</signal>
@@ -162,24 +146,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>296</x>
-     <y>265</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>BMPOtherEndClass</sender>
-   <signal>sendPixmap(QPixmap)</signal>
-   <receiver>pictureLabel</receiver>
-   <slot>setPixmap(QPixmap)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>448</x>
-     <y>524</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>416</x>
-     <y>413</y>
+     <x>315</x>
+     <y>293</y>
     </hint>
    </hints>
   </connection>
@@ -194,56 +162,72 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>316</x>
+     <x>315</x>
      <y>293</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>plainTextEdit</receiver>
-   <slot>write()</slot>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>BMPOtherEndClass</receiver>
+   <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>555</x>
-     <y>452</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>478</x>
-     <y>494</y>
+     <x>315</x>
+     <y>293</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>BMPOtherEndClass</sender>
-   <signal>sendImageData(uchar*,int,int)</signal>
-   <receiver>plainTextEdit</receiver>
-   <slot>read(uchar*,int,int)</slot>
+   <signal>sendPixmap(QPixmap)</signal>
+   <receiver>pictureLabel</receiver>
+   <slot>setPixmap(QPixmap)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>565</x>
-     <y>491</y>
+     <x>631</x>
+     <y>395</y>
     </hint>
     <hint type="destinationlabel">
-     <x>472</x>
-     <y>511</y>
+     <x>579</x>
+     <y>252</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_2</sender>
+   <sender>BMPOtherEndClass</sender>
+   <signal>sendImageData(uchar*,int*,int*)</signal>
+   <receiver>plainTextEdit</receiver>
+   <slot>read(uchar*,int*,int*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>594</x>
+     <y>499</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>475</x>
+     <y>478</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>decode</sender>
    <signal>clicked()</signal>
    <receiver>BMPOtherEndClass</receiver>
    <slot>read()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>566</x>
-     <y>545</y>
+     <x>563</x>
+     <y>530</y>
     </hint>
     <hint type="destinationlabel">
-     <x>596</x>
-     <y>475</y>
+     <x>513</x>
+     <y>564</y>
     </hint>
    </hints>
   </connection>
@@ -254,12 +238,28 @@
    <slot>write(char*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>477</x>
-     <y>456</y>
+     <x>400</x>
+     <y>489</y>
     </hint>
     <hint type="destinationlabel">
-     <x>559</x>
-     <y>477</y>
+     <x>565</x>
+     <y>482</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>encode</sender>
+   <signal>clicked()</signal>
+   <receiver>plainTextEdit</receiver>
+   <slot>write()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>520</x>
+     <y>458</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>463</y>
     </hint>
    </hints>
   </connection>

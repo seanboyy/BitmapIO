@@ -34,8 +34,8 @@ public:
     QAction *actionSave;
     QWidget *centralWidget;
     QLabel *pictureLabel;
-    QPushButton *pushButton;
-    QPushButton *pushButton_2;
+    QPushButton *encode;
+    QPushButton *decode;
     SteganoTextEdit *plainTextEdit;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -46,7 +46,7 @@ public:
     {
         if (BMPOtherEndClass->objectName().isEmpty())
             BMPOtherEndClass->setObjectName(QStringLiteral("BMPOtherEndClass"));
-        BMPOtherEndClass->resize(631, 586);
+        BMPOtherEndClass->resize(632, 587);
         actionOpen = new QAction(BMPOtherEndClass);
         actionOpen->setObjectName(QStringLiteral("actionOpen"));
         actionExit = new QAction(BMPOtherEndClass);
@@ -60,12 +60,12 @@ public:
         pictureLabel->setGeometry(QRect(10, 10, 611, 371));
         pictureLabel->setFrameShape(QFrame::WinPanel);
         pictureLabel->setScaledContents(true);
-        pushButton = new QPushButton(centralWidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(510, 400, 111, 31));
-        pushButton_2 = new QPushButton(centralWidget);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(510, 490, 111, 31));
+        encode = new QPushButton(centralWidget);
+        encode->setObjectName(QStringLiteral("encode"));
+        encode->setGeometry(QRect(510, 400, 111, 31));
+        decode = new QPushButton(centralWidget);
+        decode->setObjectName(QStringLiteral("decode"));
+        decode->setGeometry(QRect(510, 490, 111, 31));
         plainTextEdit = new SteganoTextEdit(centralWidget);
         plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
         plainTextEdit->setGeometry(QRect(10, 390, 491, 141));
@@ -73,7 +73,7 @@ public:
         BMPOtherEndClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(BMPOtherEndClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 631, 21));
+        menuBar->setGeometry(QRect(0, 0, 632, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         BMPOtherEndClass->setMenuBar(menuBar);
@@ -91,14 +91,14 @@ public:
         menuFile->addAction(actionExit);
 
         retranslateUi(BMPOtherEndClass);
-        QObject::connect(actionExit, SIGNAL(triggered()), BMPOtherEndClass, SLOT(close()));
         QObject::connect(actionOpen, SIGNAL(triggered()), BMPOtherEndClass, SLOT(loadFile()));
-        QObject::connect(BMPOtherEndClass, SIGNAL(sendPixmap(QPixmap)), pictureLabel, SLOT(setPixmap(QPixmap)));
         QObject::connect(actionSave, SIGNAL(triggered()), BMPOtherEndClass, SLOT(saveFile()));
-        QObject::connect(pushButton, SIGNAL(clicked()), plainTextEdit, SLOT(write()));
-        QObject::connect(BMPOtherEndClass, SIGNAL(sendImageData(uchar*,int,int)), plainTextEdit, SLOT(read(uchar*,int,int)));
-        QObject::connect(pushButton_2, SIGNAL(clicked()), BMPOtherEndClass, SLOT(read()));
+        QObject::connect(actionExit, SIGNAL(triggered()), BMPOtherEndClass, SLOT(close()));
+        QObject::connect(BMPOtherEndClass, SIGNAL(sendPixmap(QPixmap)), pictureLabel, SLOT(setPixmap(QPixmap)));
+        QObject::connect(BMPOtherEndClass, SIGNAL(sendImageData(uchar*,int*,int*)), plainTextEdit, SLOT(read(uchar*,int*,int*)));
+        QObject::connect(decode, SIGNAL(clicked()), BMPOtherEndClass, SLOT(read()));
         QObject::connect(plainTextEdit, SIGNAL(sendText(char*)), BMPOtherEndClass, SLOT(write(char*)));
+        QObject::connect(encode, SIGNAL(clicked()), plainTextEdit, SLOT(write()));
 
         QMetaObject::connectSlotsByName(BMPOtherEndClass);
     } // setupUi
@@ -110,8 +110,8 @@ public:
         actionExit->setText(QApplication::translate("BMPOtherEndClass", "Exit", Q_NULLPTR));
         actionSave->setText(QApplication::translate("BMPOtherEndClass", "Save...", Q_NULLPTR));
         pictureLabel->setText(QString());
-        pushButton->setText(QApplication::translate("BMPOtherEndClass", "Encode", Q_NULLPTR));
-        pushButton_2->setText(QApplication::translate("BMPOtherEndClass", "Decode", Q_NULLPTR));
+        encode->setText(QApplication::translate("BMPOtherEndClass", "Encode", Q_NULLPTR));
+        decode->setText(QApplication::translate("BMPOtherEndClass", "Decode", Q_NULLPTR));
         menuFile->setTitle(QApplication::translate("BMPOtherEndClass", "File", Q_NULLPTR));
     } // retranslateUi
 
