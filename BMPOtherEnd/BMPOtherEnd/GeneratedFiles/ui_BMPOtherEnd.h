@@ -59,6 +59,7 @@ public:
         pictureLabel->setObjectName(QStringLiteral("pictureLabel"));
         pictureLabel->setGeometry(QRect(10, 10, 611, 371));
         pictureLabel->setFrameShape(QFrame::WinPanel);
+        pictureLabel->setFrameShadow(QFrame::Sunken);
         pictureLabel->setScaledContents(true);
         encode = new QPushButton(centralWidget);
         encode->setObjectName(QStringLiteral("encode"));
@@ -70,6 +71,7 @@ public:
         plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
         plainTextEdit->setGeometry(QRect(10, 390, 491, 141));
         plainTextEdit->viewport()->setProperty("cursor", QVariant(QCursor(Qt::IBeamCursor)));
+        plainTextEdit->setFrameShadow(QFrame::Sunken);
         BMPOtherEndClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(BMPOtherEndClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));

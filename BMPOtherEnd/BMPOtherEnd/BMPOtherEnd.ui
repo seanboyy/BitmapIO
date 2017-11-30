@@ -17,14 +17,17 @@
    <widget class="QLabel" name="pictureLabel">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
+      <x>-10</x>
+      <y>60</y>
       <width>611</width>
       <height>371</height>
      </rect>
     </property>
     <property name="frameShape">
      <enum>QFrame::WinPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
     </property>
     <property name="text">
      <string/>
@@ -70,6 +73,9 @@
     </property>
     <property name="cursor" stdset="0">
      <cursorShape>IBeamCursor</cursorShape>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
     </property>
    </widget>
   </widget>
