@@ -11,10 +11,6 @@ BMPOtherEnd::BMPOtherEnd(QWidget *parent) : QMainWindow(parent) {
 	ui.setupUi(this);
 }
 
-BMPOtherEnd::~BMPOtherEnd() {
-	delete[] pixels;
-}
-
 //load file
 void BMPOtherEnd::loadFile() {
 	//get the name of the file (absolute resource location) for loading
@@ -53,7 +49,8 @@ void BMPOtherEnd::write(char* text) {
 	for (size_t i = 0; i < arrSize; ++i) {
 		//loop over bits in a character
 		for (int j = 0; j < 8; ++j) {
-			//grab jth bit in ith character in array, then do this: (pixels[pos] & 1111111(important bit)) | 0000000(important bit)
+			//grab jth bit (0x80 >> j) in ith (text[i]) character in array, move it down to the end >> (7 - j)
+			//then do this: (pixels[pos] & 1111111(bit)) | 0000000(bit)
 			//& sets 1 to 0 if needed
 			//| sets 0 to 1 if needed
 			//set the result

@@ -12,7 +12,6 @@ class BMPOtherEnd : public QMainWindow
 
 public:
 	BMPOtherEnd(QWidget *parent = Q_NULLPTR);
-	~BMPOtherEnd();
 public slots:
 	//loading file
 	void loadFile(void);
@@ -31,7 +30,7 @@ private:
 	//the user interface object
 	Ui::BMPOtherEndClass ui;
 	//the pixel data
-	uchar* pixels;
+	uchar* pixels = nullptr;
 	//width of image
 	int width;
 	//height of image
