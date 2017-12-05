@@ -48,7 +48,7 @@ void BMPOtherEnd::write(char* text) {
 	//loop over all possible areas
 	for (size_t i = 0; i < arrSize; ++i) {
 		//loop over bits in a character
-		for (int j = 0; j < 8; ++j) {
+		for (int j = 0; j < 8 && pixels != nullptr; ++j) {
 			//grab jth bit (0x80 >> j) in ith (text[i]) character in array, move it down to the end >> (7 - j)
 			//then do this: (pixels[pos] & 1111111(bit)) | 0000000(bit)
 			//& sets 1 to 0 if needed

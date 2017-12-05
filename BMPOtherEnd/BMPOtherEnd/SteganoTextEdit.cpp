@@ -14,22 +14,36 @@ SteganoTextEdit::SteganoTextEdit(QWidget * parent) : QPlainTextEdit(parent) {
 
 //read encoded data
 void SteganoTextEdit::read(uchar* pixels, int* width, int* height) {
+	if (width == nullptr || height == nullptr || pixels == nullptr) return;
+	this->height = *height;
+	this->width = *width;
 	//make a temp char for filling
 	char temp = 0;
 	//find max size the text can be (how many bytes can be hidden)
 	size_t arrSize = (*height * (*width * 3)) / 8;
+	charCount = (int)arrSize;
+	charUse = 0;
 	//create a new string of the correct size
-	text = new char[arrSize];
+	text = new char[arrSize + 1];
+	this->pixels = new uchar[arrSize * 8];
 	//loop over the pixels
-	for (int i = 0; i < *height * (*width * 3); ++i) {
+	for (int i = 0; i <= *height * (*width * 3) && pixels != nullptr; ++i) {
 		//grab the last bit of each pixel, and shove it into the temp char
 		temp |= ((pixels[i] & 0x01) << (7 - (i % 8)));
+		this->pixels[i] = pixels[i];
 		//if at the end of a character
+		if (i == *height * (*width * 3)) {
+			text[arrSize] = '\0';
+			break;
+		}
 		if (i != 0 && (i + 1) % 8 == 0) {
 			//make a regex pattern for all characters typeable on a standard english keyboard
 			QRegExp regex("[\x20-\x7E\n]", Qt::CaseSensitive, QRegExp::RegExp);
 			//check if the character we made is one of th
-			if (regex.indexIn(QString(temp)) == 0) text[((i + 1) / 8) - 1] = temp;
+			if (regex.indexIn(QString(temp)) == 0) {
+				text[((i + 1) / 8) - 1] = temp;
+				charUse++;
+			}
 			else {
 				//set any other character to null and stop
 				text[((i + 1) / 8) - 1] = '\0';
@@ -51,4 +65,13 @@ void SteganoTextEdit::write() {
 	text[temp.size()] = '\0';
 	//send the text out
 	emit sendText(text);
+}
+
+void SteganoTextEdit::doTheStuff() {
+	charUse = toPlainText().toStdString().length();
+	if (charCount < 0) charCount = 0;
+	std::stringstream ss;
+	if(charUse <= charCount) ss << charUse << "/" << charCount;
+	else ss << "TOO MANY";
+	emit sendCharCount(QString(ss.str().c_str()));
 }

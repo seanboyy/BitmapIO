@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>632</width>
-    <height>585</height>
+    <height>587</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -78,22 +78,6 @@
      <enum>QFrame::Sunken</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>510</x>
-      <y>450</y>
-      <width>111</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>0/0</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -148,14 +132,11 @@
    <header>SteganoTextEdit.hpp</header>
    <slots>
     <signal>sendText(char*)</signal>
-    <signal>sendCharCount(QString)</signal>
     <slot>read(uchar*,int*,int*)</slot>
     <slot>write()</slot>
-    <slot>doTheStuff()</slot>
    </slots>
   </customwidget>
  </customwidgets>
- <resources/>
  <connections>
   <connection>
    <sender>actionOpen</sender>
@@ -282,38 +263,6 @@
     <hint type="destinationlabel">
      <x>425</x>
      <y>463</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>plainTextEdit</sender>
-   <signal>textChanged()</signal>
-   <receiver>plainTextEdit</receiver>
-   <slot>doTheStuff()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>255</x>
-     <y>493</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>255</x>
-     <y>493</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>plainTextEdit</sender>
-   <signal>sendCharCount(QString)</signal>
-   <receiver>label</receiver>
-   <slot>setText(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>289</x>
-     <y>496</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>548</x>
-     <y>494</y>
     </hint>
    </hints>
   </connection>

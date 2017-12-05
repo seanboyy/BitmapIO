@@ -37,6 +37,7 @@ public:
     QPushButton *encode;
     QPushButton *decode;
     SteganoTextEdit *plainTextEdit;
+    QLabel *label;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -72,6 +73,10 @@ public:
         plainTextEdit->setGeometry(QRect(10, 390, 491, 141));
         plainTextEdit->viewport()->setProperty("cursor", QVariant(QCursor(Qt::IBeamCursor)));
         plainTextEdit->setFrameShadow(QFrame::Sunken);
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(510, 450, 111, 21));
+        label->setAlignment(Qt::AlignCenter);
         BMPOtherEndClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(BMPOtherEndClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -101,6 +106,8 @@ public:
         QObject::connect(decode, SIGNAL(clicked()), BMPOtherEndClass, SLOT(read()));
         QObject::connect(plainTextEdit, SIGNAL(sendText(char*)), BMPOtherEndClass, SLOT(write(char*)));
         QObject::connect(encode, SIGNAL(clicked()), plainTextEdit, SLOT(write()));
+        QObject::connect(plainTextEdit, SIGNAL(textChanged()), plainTextEdit, SLOT(doTheStuff()));
+        QObject::connect(plainTextEdit, SIGNAL(sendCharCount(QString)), label, SLOT(setText(QString)));
 
         QMetaObject::connectSlotsByName(BMPOtherEndClass);
     } // setupUi
@@ -114,6 +121,7 @@ public:
         pictureLabel->setText(QString());
         encode->setText(QApplication::translate("BMPOtherEndClass", "Encode", Q_NULLPTR));
         decode->setText(QApplication::translate("BMPOtherEndClass", "Decode", Q_NULLPTR));
+        label->setText(QApplication::translate("BMPOtherEndClass", "0/0", Q_NULLPTR));
         menuFile->setTitle(QApplication::translate("BMPOtherEndClass", "File", Q_NULLPTR));
     } // retranslateUi
 
