@@ -77,15 +77,18 @@ namespace BMPFinalBoss
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-            stegano.Bitmap = new Bitmap(openFileDialog1.FileName);
-            pictureBox1.Image = stegano.Bitmap;
+            FileInfo info = new FileInfo(openFileDialog1.FileName);
+            FileStream stream = info.OpenRead();
+            pictureBox1.Image = Image.FromStream(stream);
+            stegano.Bitmap = Image.FromStream(stream) as Bitmap;
+            stream.Close();
         }
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
             if(stegano.Bitmap != null)
             {
-                
+                stegano.Bitmap.Save(saveFileDialog1.FileName);
             }
         }
 
