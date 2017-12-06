@@ -22,6 +22,7 @@ namespace BMPFinalBoss
         {
             InitializeOpenDialog();
             InitializeSaveDialog();
+            InitializePicatureBox();
         }
 
         private void InitializeOpenDialog()
@@ -38,6 +39,11 @@ namespace BMPFinalBoss
             saveFileDialog1.Filter = "Bitmap Images(*.bmp)|*.bmp";
             saveFileDialog1.AddExtension = true;
             saveFileDialog1.Title = "Save Image";
+        }
+
+        private void InitializePicatureBox()
+        {
+            pictureBox1 = new PictureBox();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -83,9 +89,10 @@ namespace BMPFinalBoss
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-            pictureBox1.ImageLocation = openFileDialog1.FileName;
             stegano = new Stegano(openFileDialog1.FileName);
+            pictureBox1.Image = stegano.Bitmap;
             stegano.Decode(numericUpDown1.Value);
+            Controls.Add(pictureBox1);
         }
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
