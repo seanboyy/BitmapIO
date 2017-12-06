@@ -47,7 +47,7 @@ public:
     {
         if (BMPOtherEndClass->objectName().isEmpty())
             BMPOtherEndClass->setObjectName(QStringLiteral("BMPOtherEndClass"));
-        BMPOtherEndClass->resize(632, 587);
+        BMPOtherEndClass->resize(632, 585);
         actionOpen = new QAction(BMPOtherEndClass);
         actionOpen->setObjectName(QStringLiteral("actionOpen"));
         actionExit = new QAction(BMPOtherEndClass);
