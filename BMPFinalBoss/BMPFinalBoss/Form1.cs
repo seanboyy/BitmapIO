@@ -73,6 +73,7 @@ namespace BMPFinalBoss
             saveFileDialog1.AddExtension = true;
             saveFileDialog1.Title = "Save...";
             pictureBox1 = new PictureBox();
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
@@ -80,7 +81,7 @@ namespace BMPFinalBoss
             FileInfo info = new FileInfo(openFileDialog1.FileName);
             FileStream stream = info.OpenRead();
             pictureBox1.Image = Image.FromStream(stream);
-            stegano.Bitmap = Image.FromStream(stream) as Bitmap;
+            stegano.Bitmap = new Bitmap(stream);
             stream.Close();
         }
 

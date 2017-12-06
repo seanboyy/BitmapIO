@@ -23,20 +23,32 @@ namespace BMPFinalBoss
             }
         }
 
-        public string Decode(Bitmap bitmap, decimal depth)
+        public  string Decode(Bitmap bitmap, decimal depth)
         {
             int j = 0;
+            int carryover = 0;
+            int temp2 = 0;
+            int temp3 = 0;
             byte temp = 0;
-            bool R = true;
-            bool G = false;
-            bool B = false;
+            byte mask = 0;
+            for(int i = 0; i < (int)depth; ++i)
+            {
+                mask |= 0x01;
+                mask <<= 1;
+            }
             for (int i = 0; i <= bitmap.Height * bitmap.Width; ++i)
             {
-
-                for(int k = 0; k < 8; ++k)
-                {
-
-                }
+                int temp1 = (int)bitmap.GetPixel(i, j).R << 16 | (int)bitmap.GetPixel(i, j).G << 8 | (int)bitmap.GetPixel(i, j).B;
+                temp2 |= temp1 & (mask << 16);
+                temp2 >>= 16;
+                temp2 <<= (int)depth;
+                temp3 |= temp1 & (mask << 8);
+                temp3 >>= 8;
+                temp3 <<= (int)depth;
+                temp2 |= temp3;
+                temp2 |= temp1 & mask;
+                temp3 = (((mask << (int)depth) | mask) << (int)depth) | mask;
+                if (temp3 > 0xFF) /*todo: this*/;
                 if ((i + 1) % (bitmap.Width) == 0) ++j;
             }
             return "";
