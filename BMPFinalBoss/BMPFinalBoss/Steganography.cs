@@ -16,6 +16,7 @@ namespace BMPFinalBoss
         public Steganography()
         {
             InitializeComponent();
+            openFileDialog1.FileOk += new CancelEventHandler(openFileDialog1_FileOk);
         }
 
         private void Steganography_Load(object sender, EventArgs e)
@@ -58,7 +59,14 @@ namespace BMPFinalBoss
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFileDialog1.ShowDialog();
+            if(openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                textBox1.Text = openFileDialog1.FileName;
+                stegano = new Stegano(openFileDialog1.FileName);
+                //pictureBox1.ImageLocation = openFileDialog1.FileName;
+                //pictureBox1.Load();
+                //textBox1.Text = stegano.Decode(numericUpDown1.Value);
+            }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -89,10 +97,7 @@ namespace BMPFinalBoss
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-            stegano = new Stegano(openFileDialog1.FileName);
-            pictureBox1.Image = stegano.Bitmap;
-            stegano.Decode(numericUpDown1.Value);
-            Controls.Add(pictureBox1);
+
         }
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
