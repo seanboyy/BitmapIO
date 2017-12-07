@@ -63,8 +63,10 @@ namespace BMPFinalBoss
             {
                 textBox1.Text = openFileDialog1.FileName;
                 stegano = new Stegano(openFileDialog1.FileName);
-                //pictureBox1.ImageLocation = openFileDialog1.FileName;
-                //pictureBox1.Load();
+                pictureBox1.ImageLocation = openFileDialog1.FileName;
+                pictureBox1.Image = stegano.Bitmap;
+                pictureBox1.Load();
+                Controls.Add(pictureBox1);
                 //textBox1.Text = stegano.Decode(numericUpDown1.Value);
             }
         }
