@@ -69,8 +69,8 @@ namespace BMPFinalBoss
                 // Set the loaded image as pictureBox1.Image
                 // Create a new image from the file
                 Image selectedBMP = Image.FromFile(openFileDialog1.FileName);
-                // Set the picturebox's size to match the image
-                pictureBox1.Size = new Size(selectedBMP.Width, selectedBMP.Height);
+                // Set the SizeMode
+                pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
                 // Set the pictureBox1.Image 
                 pictureBox1.Image = selectedBMP;
 
