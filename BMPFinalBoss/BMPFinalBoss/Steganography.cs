@@ -21,7 +21,7 @@ namespace BMPFinalBoss
             InitializeComponent();
             InitializeOpenFileDialog();
             InitializeSaveFileDialog();
-            textBox1.Text = "Please select a BMP file";
+            textBox1.Text = "Please open a BMP file";
             textBox1.Enabled = false;
         }
 
@@ -46,7 +46,7 @@ namespace BMPFinalBoss
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 // Initialize the Stegano File
-                stegano = new Stegano(openFileDialog1.FileName);
+                stegano = new Stegano(openFileDialog1.FileName, (int)numericUpDown1.Value);
                 // Change the PictureBoxSizeMode
                 pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
                 // Set the image of the PictureBox to the opened file
@@ -73,9 +73,10 @@ namespace BMPFinalBoss
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            pictureBox1.Image = pictureBox1.InitialImage;
-            textBox1.Text = "Please select a BMP File";
+            pictureBox1.Image = null;
+            textBox1.Text = "Please open a BMP File";
             textBox1.Enabled = false;
+            numericUpDown1.Value = 1;
             label2.Text = "Characters Remaining:";
         }
 
@@ -106,8 +107,24 @@ namespace BMPFinalBoss
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+            updateCharsRemaining();
+        }
+
+        private void updateCharsRemaining()
+        {
             if (!steganoInit) return;
-            label2.Text = "Characters Remaining: " + (stegano.TextLength - textBox1.TextLength);
+            int charsRemaining = stegano.TextLength - textBox1.TextLength;
+            label2.Text = "Characters Remaining: " + charsRemaining;
+            if (charsRemaining <= 0)
+                button2.Enabled = false;
+            else
+                button2.Enabled = true;
+        }
+
+        private void depthChanged(object sender, EventArgs e)
+        {
+            stegano.Depth = (int)numericUpDown1.Value;
+            updateCharsRemaining();
         }
     }
 }
