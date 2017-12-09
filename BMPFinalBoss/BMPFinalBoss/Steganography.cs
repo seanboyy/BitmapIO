@@ -59,13 +59,26 @@ namespace BMPFinalBoss
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(openFileDialog1.ShowDialog() == DialogResult.OK)
+            // Open the file dialog and proceed only if a file is selected
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                // Display the path. This is for debugging only (ELIMINATE IN FINAL VERSION)
                 textBox1.Text = openFileDialog1.FileName;
+                // Create a stegano object for this file. NOTE - we are not reading/writing anything with the stegano class yet
                 stegano = new Stegano(openFileDialog1.FileName);
-                pictureBox1.ImageLocation = openFileDialog1.FileName;
-                pictureBox1.Image = stegano.Bitmap;
-                pictureBox1.Load();
+                // Set the loaded image as pictureBox1.Image
+                // Create a new image from the file
+                Image selectedBMP = Image.FromFile(openFileDialog1.FileName);
+                // Set the picturebox's size to match the image
+                pictureBox1.Size = new Size(selectedBMP.Width, selectedBMP.Height);
+                // Set the pictureBox1.Image 
+                pictureBox1.Image = selectedBMP;
+
+
+
+                //pictureBox1.ImageLocation = openFileDialog1.FileName;
+                //pictureBox1.Image = stegano.Bitmap; 
+                //pictureBox1.Load();
                 Controls.Add(pictureBox1);
                 //textBox1.Text = stegano.Decode(numericUpDown1.Value);
             }
