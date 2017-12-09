@@ -56,13 +56,13 @@ namespace BMPFinalBoss
         {
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-
+                stegano.Bitmap.Save(saveFileDialog1.FileName);
             }
         }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            pictureBox1.Image = pictureBox1.InitialImage;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
