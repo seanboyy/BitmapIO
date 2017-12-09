@@ -197,6 +197,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(278, 45);
             this.label2.TabIndex = 3;
+            this.label2.Text = "Characters Remaining: ";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // numericUpDown1

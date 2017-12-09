@@ -14,12 +14,15 @@ namespace BMPFinalBoss
     {
         // Member Variables
         private Stegano stegano;
+        private bool steganoInit = false;
 
         public Steganography()
         {
             InitializeComponent();
             InitializeOpenFileDialog();
             InitializeSaveFileDialog();
+            textBox1.Text = "Please select a BMP file";
+            textBox1.Enabled = false;
         }
 
         private void InitializeOpenFileDialog()
@@ -49,6 +52,14 @@ namespace BMPFinalBoss
                 // Set the image of the PictureBox to the opened file
                 pictureBox1.Image = Image.FromFile(openFileDialog1.FileName);
 
+                // Set the Chars Available/Remaining
+                label2.Text = "Characters Remaining: " + stegano.TextLength;
+
+                textBox1.Enabled = true;
+                textBox1.Text = "";
+
+                steganoInit = true;
+
             }
         }
 
@@ -63,6 +74,9 @@ namespace BMPFinalBoss
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             pictureBox1.Image = pictureBox1.InitialImage;
+            textBox1.Text = "Please select a BMP File";
+            textBox1.Enabled = false;
+            label2.Text = "Characters Remaining:";
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -72,27 +86,28 @@ namespace BMPFinalBoss
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-
+            // What is this?
         }
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-
+            // Seriously, what is it?
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            // This is the Encode Button
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            // This is the Decode Button
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
+            if (!steganoInit) return;
+            label2.Text = "Characters Remaining: " + (stegano.TextLength - textBox1.TextLength);
         }
     }
 }
