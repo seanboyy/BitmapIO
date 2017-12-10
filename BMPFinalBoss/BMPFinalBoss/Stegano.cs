@@ -24,10 +24,119 @@ namespace BMPFinalBoss
 
         public void Encode(string text)
         {
-            int j = 0;
-            for (int i = 0; i <= bitmap.Height * bitmap.Width * 3; ++i)
+            // Create a queue to contain the bit sequence of the text to be encoded
+            Queue<bool> bitStream = new Queue<bool>();
+            // convert message to boolean values in a queue
+            foreach (char c in text)
+                addChar(bitStream, c);
+            // add a null terminator so we know when to stop reading
+            addChar(bitStream, '\u0000');
+            // Now all the text has been converted to bits and added to bit stream
+
+            // The location of the current pixel in its row
+            int pixelIdxW = 0;
+            // The location of the current pixel in its column
+            int pixelIdxH = 0;
+            // The current bit of the color 
+            int bitIdx = 0;
+
+            while (bitStream.Count != 0)
             {
-                if ((i + 1) % (bitmap.Width * 3) == 0) ++j;
+                // Get the value of the current pixel
+                Color col = bitmap.GetPixel(pixelIdxW, pixelIdxH);
+                // Determine whether to use Red, Green, or Blue
+                byte modifyThis;
+                switch(bitIdx / depth)
+                {
+                    // modify the red bit
+                    case 0:
+                        modifyThis = col.R;
+                        break;
+                    // modify the green bit
+                    case 1:
+                        modifyThis = col.G;
+                        break;
+                    // modify the blue bit
+                    default:
+                        modifyThis = col.B;
+                        break;
+                }
+
+                // This is our actual functioning index for the value we want to modify, now we know which color we want
+                // -1 because if we're dealing with the first character, we don't want to bit shift at all
+                int x = (depth - (bitIdx % depth))-1;
+
+                // Find the value of the current bit there. This returns true if the bit is 0; otherwise returns false
+                bool currentBit = !((char)(modifyThis & ('\u0001' << x)) == '\u0000');
+
+                // Get the next bit to encode
+                bool bit = bitStream.Dequeue();
+
+                // If the current bit is 1 and needs to be set to 1, do nothing.
+                // the current bit is 1 and needs to be set to 0 - |
+                if (currentBit && !bit)
+                {
+                    modifyThis = (byte)(modifyThis | ('\u0001' << x));
+                }
+                // If the current bit is 0 and needs to be set to 0, do nothing.
+                // The current bit is 0 and needs to be set to 1 - ^
+                else if (!currentBit && bit)
+                {
+                    modifyThis = (byte)(modifyThis ^ ('\u0001' << x));
+                }
+
+                // We've now modified the value appropriately.
+                // All that's left is to put the modified color val back into the original color and reset
+                // the pixel color. And then update all our indexes....
+
+                Color returnCol;
+
+                switch (bitIdx / depth)
+                {
+                    // modify the red bit
+                    case 0:
+                        returnCol = Color.FromArgb(col.A, modifyThis, col.G, col.B);
+                        break;
+                    // modify the green bit
+                    case 1:
+                        returnCol = Color.FromArgb(col.A, col.R, modifyThis, col.B);
+                        break;
+                    // modify the blue bit
+                    default:
+                        returnCol = Color.FromArgb(col.A, col.R, col.G, modifyThis);
+                        break;
+                }
+
+                bitmap.SetPixel(pixelIdxW, pixelIdxH, returnCol);
+
+                // next, we update all the indexes
+                bitIdx++;
+                // we've changed all the bits in this pixel we can. Move to the next pixel
+                if (bitIdx >= depth * 3)
+                {
+                    bitIdx = 0;
+                    pixelIdxW++; 
+                    // we've changed all the pixels in this row that we can. Move to the next row. 
+                    if (pixelIdxW >= bitmap.Width)
+                    {
+                        pixelIdxW = 0;
+                        pixelIdxH++;
+                    }
+                }
+            }
+        }
+
+        private void addChar(Queue<bool> q, char c)
+        {
+            for (int i = 0; i < 16; i++)
+            {
+                // determine the ith bit of c
+                char val = (char)(c & ('\u0001'<<(15-i)));
+                // add false to q if val is equal to \u0000 - value was a 0
+                if (val == '\u0000')
+                    q.Enqueue(false);
+                else    // add true to q if val is not equal to \u0000 - value was a 1
+                    q.Enqueue(true);
             }
         }
 
