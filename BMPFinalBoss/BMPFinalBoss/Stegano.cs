@@ -161,50 +161,59 @@ namespace BMPFinalBoss
             int bitIdx = 0;
 
 
-            while (zeroCount < 16)
+            while (zeroCount < 16 || !(bitStream.Count % 16 == 0))
             {
-                // Get the current pixel
-                Color col = bitmap.GetPixel(pixelIdxW, pixelIdxH);
-                // Get the next bit to read
-                int bIdx = (depth - (bitIdx % depth)) - 1;
-                bool bit = false;
-                switch (bitIdx / depth)
+                try     // This is in a try block in case we go to far
                 {
-                    // read from the red color
-                    case 0:
-                        bit = ReadBitAtPos(col.R, bIdx);
-                        break;
-                    // read from the green color
-                    case 1:
-                        bit = (ReadBitAtPos(col.G, bIdx);
-                        break;
-                    // raed from the blue color
-                    default:
-                        bit = ReadBitAtPos(col.B, bIdx);
-                        break;
-                }
-
-                // check to see if val is a zero
-                if (!bit)
-                    zeroCount++;
-                else
-                    zeroCount = 0;
-                bitStream.Enqueue(bit);
-
-
-                // next, we update all the indexes
-                bitIdx++;
-                // we've changed all the bits in this pixel we can. Move to the next pixel
-                if (bitIdx >= depth * 3)
-                {
-                    bitIdx = 0;
-                    pixelIdxW++;
-                    // we've changed all the pixels in this row that we can. Move to the next row. 
-                    if (pixelIdxW >= bitmap.Width)
+                    // Get the current pixel
+                    Color col = bitmap.GetPixel(pixelIdxW, pixelIdxH);
+                
+                    // Get the next bit to read
+                    int bIdx = (depth - (bitIdx % depth)) - 1;
+                    bool bit = false;
+                    switch (bitIdx / depth)
                     {
-                        pixelIdxW = 0;
-                        pixelIdxH++;
+                        // read from the red color
+                        case 0:
+                            bit = ReadBitAtPos(col.R, bIdx);
+                            break;
+                        // read from the green color
+                        case 1:
+                            bit = ReadBitAtPos(col.G, bIdx);
+                            break;
+                        // raed from the blue color
+                        default:
+                            bit = ReadBitAtPos(col.B, bIdx);
+                            break;
                     }
+
+                    // check to see if val is a zero
+                    if (!bit)
+                        zeroCount++;
+                    else
+                        zeroCount = 0;
+                    bitStream.Enqueue(bit);
+
+
+                    // next, we update all the indexes
+                    bitIdx++;
+                    // we've changed all the bits in this pixel we can. Move to the next pixel
+                    if (bitIdx >= depth * 3)
+                    {
+                        bitIdx = 0;
+                        pixelIdxW++;
+                        // we've changed all the pixels in this row that we can. Move to the next row. 
+                        if (pixelIdxW >= bitmap.Width)
+                        {
+                            pixelIdxW = 0;
+                            pixelIdxH++;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    // The end of the file has been reached. No more pixels can be read. Break. 
+                    break;
                 }
             }
 
@@ -304,6 +313,7 @@ namespace BMPFinalBoss
             {
                 depth = value;
                 textLen = (bitmap.Width * 3 * bitmap.Height) / (16 / depth);
+                textLen--; // this is to let us have room for a null character at the end of a string
             }
         }
     }

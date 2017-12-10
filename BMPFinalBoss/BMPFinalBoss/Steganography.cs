@@ -98,11 +98,13 @@ namespace BMPFinalBoss
         private void button1_Click(object sender, EventArgs e)
         {
             // This is the Encode Button
+            stegano.Encode(textBox1.Text);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             // This is the Decode Button
+            textBox1.Text = stegano.Decode();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -115,10 +117,10 @@ namespace BMPFinalBoss
             if (!steganoInit) return;
             int charsRemaining = stegano.TextLength - textBox1.TextLength;
             label2.Text = "Characters Remaining: " + charsRemaining;
-            if (charsRemaining <= 0)
-                button2.Enabled = false;
+            if (charsRemaining < 0)
+                button1.Enabled = false;
             else
-                button2.Enabled = true;
+                button1.Enabled = true;
         }
 
         private void depthChanged(object sender, EventArgs e)
