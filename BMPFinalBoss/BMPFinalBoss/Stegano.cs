@@ -14,7 +14,6 @@ namespace BMPFinalBoss
         Bitmap bitmap;
         int textLen;
         int depth;
-        Regex reg = new Regex("[\x20-\x7E\n]");
 
         public Stegano(string uri, int _depth)
         {
@@ -64,25 +63,25 @@ namespace BMPFinalBoss
 
                 // This is our actual functioning index for the value we want to modify, now we know which color we want
                 // -1 because if we're dealing with the first character, we don't want to bit shift at all
-                int bIdx = (depth - (bitIdx % depth))-1;
+                int bIdx = (depth - (bitIdx % depth)) - 1;
 
                 // Find the value of the current bit there. This returns true if the bit is 0; otherwise returns false
-                bool currentBit = !((char)(modifyThis & ('\u0001' << bIdx)) == '\u0000');
+                bool currentBit = ReadBitAtPos(modifyThis, bIdx);
 
                 // Get the next bit to encode
                 bool bit = bitStream.Dequeue();
 
                 // If the current bit is 1 and needs to be set to 1, do nothing.
-                // the current bit is 1 and needs to be set to 0 - |
+                // the current bit is 1 and needs to be set to 0 - ^
                 if (currentBit && !bit)
                 {
-                    modifyThis = (byte)(modifyThis | ('\u0001' << bIdx));
+                    modifyThis = (byte)(modifyThis ^ ('\u0001' << bIdx));
                 }
                 // If the current bit is 0 and needs to be set to 0, do nothing.
-                // The current bit is 0 and needs to be set to 1 - ^
+                // The current bit is 0 and needs to be set to 1 - |
                 else if (!currentBit && bit)
                 {
-                    modifyThis = (byte)(modifyThis ^ ('\u0001' << bIdx));
+                    modifyThis = (byte)(modifyThis | ('\u0001' << bIdx));
                 }
 
                 // We've now modified the value appropriately.
@@ -229,7 +228,7 @@ namespace BMPFinalBoss
                 {
                     if (bitStream.Dequeue())
                     {
-                        c = (char)(c & '\u0001');
+                        c = (char)(c | '\u0001');
                     }
                     c <<= 1;
                 }
@@ -239,59 +238,6 @@ namespace BMPFinalBoss
             }
 
             return returnVal;
-            //int j = 0;
-            //int carryover = 0;
-            //int temp2 = 0;
-            //int temp3 = 0;
-            //int temp4 = 0;
-            //byte temp = 0;
-            //byte mask = 0;
-            //string ret = "";
-            //for (int i = 0; i < (int)depth; ++i)
-            //{
-            //    mask |= 0x01;
-            //    mask <<= 1;
-            //}
-            //for (int i = 0; i <= bitmap.Height * bitmap.Width; ++i)
-            //{
-            //    //does the following 
-            //    //Pixel = RGB: for example 01011101, 11100101, 01010111
-            //    //push that into temp:
-            //    //temp1 = 00000000010111011110010101010111
-            //    //grab <encoding depth> bits from R, G, and B and shift them around to temp2
-            //    //encoding depth = 3
-            //    //temp2 = 00000000000001010000000000000000
-            //    //temp2 = 00000000000000000000000000000101
-            //    //temp2 = 00000000000000000000000101000000
-            //    //temp3 = 00000000000000000000010100000000
-            //    //temp3 = 00000000000000000000000000000101
-            //    //temp3 = 00000000000000000000000000101000
-            //    //temp2 = 00000000000000000000000101101000
-            //    //temp2 = 00000000000000000000000101101111
-            //    //temp4 = 00000000000000000000000111111111
-            //    //pull pixel data into an integer (32 bits)
-            //    int temp1 = (int)bitmap.GetPixel(i, j).R << 16 | (int)bitmap.GetPixel(i, j).G << 8 | (int)bitmap.GetPixel(i, j).B;
-            //    //mask R
-            //    temp2 = temp1 & (mask << 16);
-            //    //shift over
-            //    temp2 >>= 16;
-            //    //shift back
-            //    temp2 <<= ((int)depth * 2);
-            //    //mask G
-            //    temp3 = temp1 & (mask << 8);
-            //    //shift over
-            //    temp3 >>= 8;
-            //    //shift back
-            //    temp3 <<= (int)depth;
-            //    //add to masked data
-            //    temp2 |= temp3;
-            //    //mask B
-            //    temp2 |= temp1 & mask;
-            //    temp4 = (((mask << (int)depth) | mask) << (int)depth) | mask;
-            //    //if (temp3 > 0xFF) /*todo: this*/;
-            //    if ((i + 1) % (bitmap.Width) == 0) ++j;
-            //}
-            //return ret;
         }
 
         public Bitmap Bitmap
