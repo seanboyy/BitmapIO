@@ -59,7 +59,6 @@ namespace BMPFinalBoss
                 textBox1.Text = "";
 
                 steganoInit = true;
-
             }
         }
 
@@ -67,7 +66,16 @@ namespace BMPFinalBoss
         {
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                stegano.Bitmap.Save(saveFileDialog1.FileName);
+                try
+                {
+
+                    //System.IO.FileStream fs = (System.IO.FileStream)saveFileDialog1.OpenFile();
+                    //stegano.Bitmap.Save(fs, System.Drawing.Imaging.ImageFormat.Bmp);
+                    stegano.Bitmap.Save(saveFileDialog1.FileName);
+                } catch (Exception exception) {
+                    int x = 1;
+                }
+
             }
         }
 
