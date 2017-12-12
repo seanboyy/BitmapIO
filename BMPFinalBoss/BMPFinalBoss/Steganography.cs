@@ -66,16 +66,7 @@ namespace BMPFinalBoss
         {
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                try
-                {
-
-                    //System.IO.FileStream fs = (System.IO.FileStream)saveFileDialog1.OpenFile();
-                    //stegano.Bitmap.Save(fs, System.Drawing.Imaging.ImageFormat.Bmp);
-                    stegano.Bitmap.Save(saveFileDialog1.FileName);
-                } catch (Exception exception) {
-                    int x = 1;
-                }
-
+                stegano.Bitmap.Save(saveFileDialog1.FileName);
             }
         }
 
