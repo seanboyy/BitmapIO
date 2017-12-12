@@ -1,0 +1,4 @@
+Source Control (Message 1) - 2 bits
+Rainy (Message 2) - 3 bits
+Shapes (Message 3) - 6 bits
+Happy Face (Message 4) - 8 bits
