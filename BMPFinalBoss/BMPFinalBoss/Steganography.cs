@@ -84,16 +84,6 @@ namespace BMPFinalBoss
             Application.Exit();
         }
 
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
-        {
-            // What is this?
-        }
-
-        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
-        {
-            // Seriously, what is it?
-        }
-
         private void Encode_Click(object sender, EventArgs e)
         {
             // This is the Encode Button
@@ -128,11 +118,7 @@ namespace BMPFinalBoss
             updateCharsRemaining();
         }
 
-        private void pictureBox_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        // I don't know what either of these are, but I can't seem to delete them...
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
